@@ -48,7 +48,7 @@
                    android:layout_marginTop="10dp"
                    android:layout_marginBottom="5dp"
                    android:hint="@string/height"
-                   android:text="@{`Height: ` + character.height}" />
+                   android:text="@{`Height: ` + character.height.concat(` cm`)}" />
 
                <TextView
                    android:layout_width="wrap_content"
