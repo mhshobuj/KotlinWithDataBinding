@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mhs.kotlintest.databinding.RecyclerItemBinding
 import com.mhs.kotlintest.response.CharacterList
 
-class CharacterListAdapter : ListAdapter<CharacterList.Result, CharacterListAdapter.MyViewHolder>(CharacterDiffUtil()) {
+class CharacterListAdapter(private val onItemClick: (String) -> Unit) : ListAdapter<CharacterList.Result, CharacterListAdapter.MyViewHolder>(CharacterDiffUtil()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -21,6 +21,15 @@ class CharacterListAdapter : ListAdapter<CharacterList.Result, CharacterListAdap
     }
 
     inner class MyViewHolder(private val binding: RecyclerItemBinding) : RecyclerView.ViewHolder(binding.root) {
+        init {
+            itemView.setOnClickListener {
+                val position = adapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    val item = getItem(position)
+                    onItemClick.invoke(item.url) // Replace 'someString' with the string you want to pass
+                }
+            }
+        }
         fun bind(item: CharacterList.Result) {
             binding.character = item
         }

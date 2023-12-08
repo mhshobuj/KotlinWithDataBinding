@@ -1,5 +1,6 @@
 package com.mhs.kotlintest.ui
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -30,7 +31,13 @@ class MainActivity : AppCompatActivity() {
         binding =ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        characterListAdapter = CharacterListAdapter() // Initialize the adapter
+        characterListAdapter = CharacterListAdapter { clickedString ->
+            val intent = Intent(this, DetailsActivity::class.java)
+            // Add the character's URL as an extra to the Intent
+            intent.putExtra("itemURL", clickedString)
+            // Start the DetailsActivity
+            startActivity(intent)
+        }
 
         binding.recyclerView.layoutManager = LinearLayoutManager(this).apply {
             orientation = LinearLayoutManager.VERTICAL
@@ -61,6 +68,5 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-
     }
 }
